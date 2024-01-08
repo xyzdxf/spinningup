@@ -1,5 +1,4 @@
 import spinup
-from spinup.user_config import DEFAULT_BACKEND
 from spinup.utils.run_utils import ExperimentGrid
 from spinup.utils.serialization_utils import convert_json
 import argparse
@@ -8,7 +7,6 @@ import json
 import os, subprocess, sys
 import os.path as osp
 import string
-import tensorflow as tf
 import torch
 from copy import deepcopy
 from textwrap import dedent
@@ -36,7 +34,7 @@ def add_with_backends(algo_list):
     # helper function to build lists with backend-specific function names
     algo_list_with_backends = deepcopy(algo_list)
     for algo in algo_list:
-        algo_list_with_backends += [algo + '_tf1', algo + '_pytorch']
+        algo_list_with_backends += [algo + '_pytorch']
     return algo_list_with_backends
 
 
@@ -49,8 +47,7 @@ def parse_and_execute_grid_search(cmd, args):
     """Interprets algorithm name and cmd line args into an ExperimentGrid."""
 
     if cmd in BASE_ALGO_NAMES:
-        backend = DEFAULT_BACKEND[cmd]
-        print('\n\nUsing default backend (%s) for %s.\n'%(backend, cmd))
+        backend = 'pytorch'
         cmd = cmd + '_' + backend
 
     algo = eval('spinup.'+cmd)
