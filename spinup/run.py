@@ -30,14 +30,6 @@ MPI_COMPATIBLE_ALGOS = ['vpg', 'trpo', 'ppo']
 BASE_ALGO_NAMES = ['vpg', 'trpo', 'ppo', 'ddpg', 'td3', 'sac']
 
 
-def add_with_backends(algo_list):
-    # helper function to build lists with backend-specific function names
-    algo_list_with_backends = deepcopy(algo_list)
-    for algo in algo_list:
-        algo_list_with_backends += [algo + '_pytorch']
-    return algo_list_with_backends
-
-
 def friendly_err(err_msg):
     # add whitespace to error message to make it more readable
     return '\n\n' + err_msg + '\n\n'
@@ -45,11 +37,6 @@ def friendly_err(err_msg):
 
 def parse_and_execute_grid_search(cmd, args):
     """Interprets algorithm name and cmd line args into an ExperimentGrid."""
-
-    if cmd in BASE_ALGO_NAMES:
-        backend = 'pytorch'
-        cmd = cmd + '_' + backend
-
     algo = eval('spinup.'+cmd)
 
     # Before all else, check to see if any of the flags is 'help'.
@@ -145,7 +132,7 @@ def parse_and_execute_grid_search(cmd, args):
     # Make sure that if num_cpu > 1, the algorithm being used is compatible
     # with MPI.
     if 'num_cpu' in run_kwargs and not(run_kwargs['num_cpu'] == 1):
-        assert cmd in add_with_backends(MPI_COMPATIBLE_ALGOS), \
+        assert cmd in MPI_COMPATIBLE_ALGOS, \
             friendly_err("This algorithm can't be run with num_cpu > 1.")
 
     # Special handling for environment: make sure that env_name is a real,
@@ -190,7 +177,7 @@ if __name__ == '__main__':
     """
 
     cmd = sys.argv[1] if len(sys.argv) > 1 else 'help'
-    valid_algos = add_with_backends(BASE_ALGO_NAMES)
+    valid_algos = BASE_ALGO_NAMES
     valid_utils = ['plot', 'test_policy']
     valid_help = ['--help', '-h', 'help']
     valid_cmds = valid_algos + valid_utils + valid_help

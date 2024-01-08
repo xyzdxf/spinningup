@@ -1,10 +1,10 @@
 # Algorithms
-from spinup.algos.pytorch.ddpg.ddpg import ddpg as ddpg_pytorch
-from spinup.algos.pytorch.ppo.ppo import ppo as ppo_pytorch
-from spinup.algos.pytorch.sac.sac import sac as sac_pytorch
-from spinup.algos.pytorch.td3.td3 import td3 as td3_pytorch
-from spinup.algos.pytorch.trpo.trpo import trpo as trpo_pytorch
-from spinup.algos.pytorch.vpg.vpg import vpg as vpg_pytorch
+from spinup.algos.ddpg.ddpg import ddpg
+from spinup.algos.ppo.ppo import ppo
+from spinup.algos.sac.sac import sac
+from spinup.algos.td3.td3 import td3
+from spinup.algos.trpo.trpo import trpo
+from spinup.algos.vpg.vpg import vpg
 
 # Loggers
 from spinup.utils.logx import Logger, EpochLogger
