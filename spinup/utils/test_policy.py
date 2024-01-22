@@ -38,7 +38,7 @@ def load_policy_and_env(fpath, itr='last', deterministic=False):
         itr = '%d'%itr
 
     # load the get_action function
-    get_action = load_pytorch_policy(fpath, itr, deterministic)
+    get_action = load_policy(fpath, itr, deterministic)
 
     # try to load environment from save
     # (sometimes this will fail because the environment could not be pickled)
@@ -51,7 +51,7 @@ def load_policy_and_env(fpath, itr='last', deterministic=False):
     return env, get_action
 
 
-def load_pytorch_policy(fpath, itr, deterministic=False):
+def load_policy(fpath, itr, deterministic=False):
     """ Load a pytorch policy saved with Spinning Up Logger."""
     
     fname = osp.join(fpath, 'pyt_save', 'model'+itr+'.pt')
